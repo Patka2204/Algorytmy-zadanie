@@ -1,0 +1,28 @@
+from itertools import combinations
+
+def has_arithmetic_sequence(subset):
+    """Sprawdza, czy w podzbiorze istnieje ciąg arytmetyczny długości 3."""
+    subset = sorted(subset)  # Upewniamy się, że podzbiór jest posortowany
+    for i in range(len(subset) - 2):
+        if subset[i+1] - subset[i] == subset[i+2] - subset[i+1]:  # Różnica między kolejnymi elementami
+            return True
+    return False
+
+def generate_subsets(n):
+    """Generuje wszystkie 5-elementowe podzbiory bez ciągu arytmetycznego długości 3."""
+    all_subsets = combinations(range(1, n + 1), 5)
+    valid_subsets = []
+    for subset in all_subsets:
+        if not has_arithmetic_sequence(subset):
+            valid_subsets.append(subset)
+    return valid_subsets
+
+if __name__ == "__main__":
+    n = int(input("Podaj maksymalną liczbę n: "))
+    subsets = generate_subsets(n)
+    if subsets:
+        print(f"5-elementowe podzbiory zbioru {{1, ..., {n}}} bez ciągów arytmetycznych długości 3:")
+        for subset in subsets:
+            print(subset)
+    else:
+        print(f"Nie znaleziono 5-elementowych podzbiorów zbioru {{1, ..., {n}}} bez ciągów arytmetycznych długości 3.")
